@@ -15,14 +15,15 @@
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      /* 調整為帶有陽光朝氣的明亮溫暖漸層遮罩，透出妳的個人照片 */
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.9)), url('bg.jpg');
+      /* 預設背景為關於我的照片，並設定平滑的背景轉換動畫 */
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.9)), url('bg_about.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      color: #1e293b; /* 文字改為深色，確保在亮色背景下清晰易讀 */
+      color: #1e293b;
       line-height: 1.7;
       scroll-behavior: smooth;
+      transition: background 0.5s ease-in-out; /* 換分頁時背景淡入淡出的特效 */
     }
 
     /* 頂端固定式：純淨白磨砂玻璃導覽列 */
@@ -53,7 +54,7 @@
     }
 
     nav button:hover, nav button.active {
-      color: #0284c7; /* 陽光活力藍 */
+      color: #0284c7;
       background: rgba(2, 132, 199, 0.1);
     }
 
@@ -74,7 +75,6 @@
       font-size: 56px;
       margin-bottom: 12px;
       letter-spacing: 2px;
-      /* 耀眼有精神的深邃藍色漸層 */
       background: linear-gradient(to right, #0f172a, #0284c7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -147,6 +147,27 @@
       color: #334155;
     }
 
+    /* 📸 照片展示牆樣式（如果特定分頁內也想放小照片可以使用） */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .photo-item {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .photo-item:hover {
+      transform: scale(1.03);
+    }
+
     /* 特殊經歷與勳章列表 */
     .highlight-list {
       list-style-type: none;
@@ -206,12 +227,12 @@
 
 <body>
 
-  <!-- 頂端導覽分頁按鈕 -->
+  <!-- 頂端導覽分頁按鈕：加入了換背景圖片的參數 -->
   <nav>
-    <button class="nav-btn active" onclick="switchTab('about-tab')">關於我</button>
-    <button class="nav-btn" onclick="switchTab('expertise-tab')">專業與證照</button>
-    <button class="nav-btn" onclick="switchTab('competition-tab')">賽事經歷</button>
-    <button class="nav-btn" onclick="switchTab('research-tab')">學術與其他</button>
+    <button class="nav-btn active" onclick="switchTab('about-tab', 'bg_about.jpg')">關於我</button>
+    <button class="nav-btn" onclick="switchTab('expertise-tab', 'bg_expertise.jpg')">專業與證照</button>
+    <button class="nav-btn" onclick="switchTab('competition-tab', 'bg_competition.jpg')">賽事經歷</button>
+    <button class="nav-btn" onclick="switchTab('research-tab', 'bg_research.jpg')">學術與其他</button>
   </nav>
 
   <!-- HERO 首頁大圖區 -->
@@ -373,7 +394,7 @@
       </section>
 
       <section id="other">
-        <h2>Other Experience｜其他經歷</h2>
+        <h2>Other Experience｜核心與其他經歷</h2>
         <div class="card">
           <ul class="normal-list">
             <li>臺灣美津濃Ｍizuno贊助選手</li>
@@ -404,18 +425,28 @@
     © YoYo Liang. All Rights Reserved.
   </footer>
 
-  <!-- 前端分頁邏輯 -->
+  <!-- 前端分頁與背景動態切換邏輯 -->
   <script>
-    function switchTab(tabId) {
+    function switchTab(tabId, bgImage) {
+      // 1. 切換內容分頁顯示
       const contents = document.querySelectorAll('.tab-content');
       contents.forEach(content => content.classList.remove('active'));
       
+      // 2. 切換按鈕的高亮狀態
       const buttons = document.querySelectorAll('.nav-btn');
       buttons.forEach(button => button.classList.remove('active'));
       
+      // 3. 顯示目前點選的分頁
       document.getElementById(tabId).classList.add('active');
       event.currentTarget.classList.add('active');
       
+      // 4. 🔥 重點：根據傳入的圖片名稱，動態更換 body 的背景圖，並保有原本的漸層磨砂效果
+      document.body.style.background = `linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.9)), url('${bgImage}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundAttachment = 'fixed';
+      
+      // 5. 畫面平滑滾動回頂端
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
