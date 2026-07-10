@@ -15,11 +15,15 @@
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      /* 預設背景為關於我的照片，並設定平滑的背景轉換動畫 */
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.9)), url('bg_about.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      /* 下面這行就是把背景換成妳剛剛上傳的 bg.jpg 照片，並加上一層黑色的半透明遮罩，讓文字看得很清楚 */
+      background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('bg.jpg');
+      background-size: cover;       /* 讓照片自動鋪滿整個螢幕 */
+      background-position: center;  /* 照片置中 */
+      background-attachment: fixed; /* 捲動網頁時背景固定，看起來非常進階高級 */
+      color: #f1f5f9;
+      line-height: 1.7;
+      scroll-behavior: smooth;
+    }
       color: #1e293b;
       line-height: 1.7;
       scroll-behavior: smooth;
