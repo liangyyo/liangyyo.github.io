@@ -6,7 +6,7 @@
   <title>YoYo Liang | Personal Website</title>
 
   <style>
-    /* 全域設定：陽光、活力與高質感運動風格 */
+    /* 全域設定：陽光可愛粉紅風格 */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -15,22 +15,17 @@
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      /* 下面這行就是把背景換成妳剛剛上傳的 bg.jpg 照片，並加上一層黑色的半透明遮罩，讓文字看得很清楚 */
-      background: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('bg.jpg');
-      background-size: cover;       /* 讓照片自動鋪滿整個螢幕 */
-      background-position: center;  /* 照片置中 */
-      background-attachment: fixed; /* 捲動網頁時背景固定，看起來非常進階高級 */
-      color: #f1f5f9;
+      /* 柔和粉桃遮罩 + 妳的照片背景，壓低過白底色，讓照片細節更清晰 */
+      background: linear-gradient(rgba(255, 241, 242, 0.85), rgba(255, 228, 230, 0.85)), url('bg.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #4c0519; /* 深莓果色文字，讀起來最舒服不吃力 */
       line-height: 1.7;
       scroll-behavior: smooth;
-    }
-      color: #1e293b;
-      line-height: 1.7;
-      scroll-behavior: smooth;
-      transition: background 0.5s ease-in-out; /* 換分頁時背景淡入淡出的特效 */
     }
 
-    /* 頂端固定式：純淨白磨砂玻璃導覽列 */
+    /* 頂端固定式可愛粉紅微透光導覽列 */
     nav {
       position: fixed;
       top: 0;
@@ -38,31 +33,32 @@
       background: rgba(255, 255, 255, 0.8);
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 12px;
       padding: 15px;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       z-index: 1000;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 2px solid #fecdd3;
     }
 
     nav button {
       background: none;
       border: none;
-      color: #64748b;
+      color: #9d174d;
       font-size: 15px;
-      font-weight: 600;
+      font-weight: bold;
       cursor: pointer;
-      padding: 6px 12px;
+      padding: 6px 14px;
       transition: all 0.3s ease;
-      border-radius: 6px;
+      border-radius: 20px; /* 圓滾滾的可愛按鈕 */
     }
 
     nav button:hover, nav button.active {
-      color: #0284c7;
-      background: rgba(2, 132, 199, 0.1);
+      color: white;
+      background: #fb7185; /* 陽光粉紅 */
+      box-shadow: 0 4px 10px rgba(251, 113, 133, 0.3);
     }
 
-    /* HERO 主視覺區塊：早晨金色與天空藍的陽光漸層 */
+    /* HERO 主視覺區塊（蜜桃陽光漸層） */
     header {
       height: 50vh;
       display: flex;
@@ -70,45 +66,46 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(135deg, rgba(255, 237, 213, 0.4), rgba(186, 230, 253, 0.45)); 
+      background: linear-gradient(to bottom, rgba(255, 228, 230, 0.5), rgba(255, 241, 242, 0.2));
       padding: 20px;
       margin-top: 50px;
     }
 
     h1 {
-      font-size: 56px;
+      font-size: 52px;
       margin-bottom: 12px;
       letter-spacing: 2px;
-      background: linear-gradient(to right, #0f172a, #0284c7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 800;
+      color: #db2777; /* 俏皮玫瑰粉 */
+      text-shadow: 2px 2px 0px white, 4px 4px 0px rgba(251, 113, 133, 0.15); /* 可愛立體字效果 */
     }
 
     header p {
       font-size: 19px;
-      color: #334155;
-      font-weight: 500;
+      color: #be123c;
+      font-weight: 600;
     }
 
     .lang {
       margin-top: 12px;
       font-size: 16px;
-      color: #0369a1;
-      letter-spacing: 3px;
+      color: #f43f5e;
+      letter-spacing: 2px;
       font-weight: bold;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 4px 16px;
+      border-radius: 30px;
     }
 
-    /* 主要內容區 */
+    /* 主要內容區與分頁顯示邏輯 */
     main {
       max-width: 900px;
-      margin: 40px auto;
+      margin: 30px auto;
       padding: 0 20px;
     }
 
     .tab-content {
       display: none;
-      animation: fadeIn 0.4s ease-in-out;
+      animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .tab-content.active {
@@ -117,59 +114,35 @@
 
     h2 {
       font-size: 26px;
-      color: #0284c7;
-      border-left: 5px solid #0284c7;
+      color: #e11d48;
+      border-left: 6px solid #fb7185;
       padding-left: 12px;
       margin-bottom: 20px;
       margin-top: 10px;
-      font-weight: 700;
     }
 
     h3 {
-      color: #0369a1;
-      margin-top: 15px;
+      color: #be123c;
+      margin-top: 20px;
       margin-bottom: 12px;
-      font-size: 18px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      font-size: 19px;
+      border-bottom: 2px dashed #fecdd3; /* 可愛虛線分隔 */
       padding-bottom: 5px;
     }
 
-    /* 高級感十足的白色磨砂玻璃卡片 */
+    /* 陽光棉花糖卡片樣式 */
     .card {
-      background: rgba(255, 255, 255, 0.75); 
+      background: rgba(255, 255, 255, 0.75); /* 白色半透明，確保卡片內文字絕對清晰 */
       padding: 25px;
-      border-radius: 16px;
+      border-radius: 20px;
       margin-bottom: 25px;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
-      backdrop-filter: blur(6px);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 8px 24px rgba(251, 113, 133, 0.08); /* 微微的粉紅粉嫩陰影 */
     }
 
     .card p {
       font-size: 16px;
       margin-bottom: 10px;
-      color: #334155;
-    }
-
-    /* 📸 照片展示牆樣式（如果特定分頁內也想放小照片可以使用） */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .photo-item {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
-    }
-
-    .photo-item:hover {
-      transform: scale(1.03);
     }
 
     /* 特殊經歷與勳章列表 */
@@ -184,11 +157,12 @@
       padding-left: 28px;
       margin-bottom: 12px;
       font-size: 15px;
-      color: #1e293b;
+      color: #4c0519;
+      font-weight: 500;
     }
 
     .highlight-list li::before {
-      content: "🏅";
+      content: "🌸"; /* 換成可愛櫻花前綴 */
       position: absolute;
       left: 0;
     }
@@ -201,49 +175,49 @@
 
     .normal-list li {
       position: relative;
-      padding-left: 22px;
+      padding-left: 24px;
       margin-bottom: 10px;
       font-size: 15px;
-      color: #334155;
     }
 
     .normal-list li::before {
-      content: "✦";
+      content: "✨"; /* 換成閃亮亮星星 */
       position: absolute;
       left: 0;
-      color: #0284c7;
+      color: #fb7185;
     }
 
     footer {
       text-align: center;
       padding: 40px;
+      color: #9d174d;
       opacity: 0.6;
       font-size: 14px;
-      color: #475569;
+      font-weight: bold;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 頂端導覽分頁按鈕：加入了換背景圖片的參數 -->
+  <!-- 頂端導覽分頁按鈕 -->
   <nav>
-    <button class="nav-btn active" onclick="switchTab('about-tab', 'bg_about.jpg')">關於我</button>
-    <button class="nav-btn" onclick="switchTab('expertise-tab', 'bg_expertise.jpg')">專業與證照</button>
-    <button class="nav-btn" onclick="switchTab('competition-tab', 'bg_competition.jpg')">賽事經歷</button>
-    <button class="nav-btn" onclick="switchTab('research-tab', 'bg_research.jpg')">學術與其他</button>
+    <button class="nav-btn active" onclick="switchTab('about-tab')">關於我</button>
+    <button class="nav-btn" onclick="switchTab('expertise-tab')">專業與證照</button>
+    <button class="nav-btn" onclick="switchTab('competition-tab')">賽事經歷</button>
+    <button class="nav-btn" onclick="switchTab('research-tab')">學術與其他</button>
   </nav>
 
   <!-- HERO 首頁大圖區 -->
   <header>
     <h1>YoYo Liang</h1>
     <p>Enjoy your life • Love yourself</p>
-    <p class="lang">心之所向 步履不停</p>
+    <p class="lang">努力不會白費 時間會證明一切</p>
   </header>
 
   <!-- 網頁主要內容 -->
@@ -254,16 +228,16 @@
       <section id="about">
         <h2>About Me｜個人介紹</h2>
         <div class="card">
-          <p>
+          <p style="font-weight: 500;">
             I am YoYo Liang, a Master’s graduate in Competitive Sports of Physical Education from National Taiwan University of Sport.
             I specialize in athletics Hammer throw, Bobsleigh, Sports biomechanics, and strength & Conditioning.
           </p>
-          <p class="lang" style="color: #475569; font-weight: normal; letter-spacing: 0; margin-bottom: 15px;">
+          <p class="lang" style="color: #be123c; font-weight: 500; letter-spacing: 0; margin-bottom: 15px; background: none; padding: 0;">
             我畢業於國立臺灣體育運動大學 競技運動學系 體育學碩士。<br>
             專長：田徑競技運動訓練、肌力體能訓練、運動科學研究、運動生物力學、幼兒體能教學、水上活動。
           </p>
           
-          <h3>🏅 特殊經歷 Highlight</h3>
+          <h3>🌸 特殊經歷 Highlight</h3>
           <ul class="highlight-list">
             <li>Chinese Taipei Bobsleigh National Team | 中華台北雪車國家代表隊</li>
             <li>Chinese Taipei Track and Field National Team | 中華台北田徑國家代表隊</li>
@@ -283,7 +257,7 @@
         <div class="card">
           <p><strong>National Taiwan University of Sport</strong></p>
           <p>Master Degree Competitive Sports of Physical Education</p>
-          <p class="lang" style="color: #475569; font-weight: normal; letter-spacing: 0;">國立臺灣體育運動大學 競技運動學系 體育學碩士</p>
+          <p style="color: #be123c; font-weight: 500; margin-top: 5px;">國立臺灣體育運動大學 競技運動學系 體育學碩士</p>
         </div>
       </section>
     </div>
@@ -398,7 +372,7 @@
       </section>
 
       <section id="other">
-        <h2>Other Experience｜核心與其他經歷</h2>
+        <h2>Other Experience｜其他經歷</h2>
         <div class="card">
           <ul class="normal-list">
             <li>臺灣美津濃Ｍizuno贊助選手</li>
@@ -406,7 +380,7 @@
             <li>臺灣體育運動大學女生宿舍自治委員會幹部</li>
             <li>ISATC國際體育事務人才培訓營-培訓學員</li>
             <li>111-114年體育署運動科學支援競技運動計畫</li>
-            <li>111年青年職涯 brand 品牌行銷營-培訓學員</li>
+            <li>111年青年職涯品牌行銷營-培訓學員</li>
             <li>110年大專女學生領導力培訓營-培訓學員</li>
             <li>108級臺灣體育運動大學競技運動學系系學會幹部</li>
           </ul>
@@ -416,8 +390,8 @@
       <section id="contact">
         <h2>Contact｜聯絡我</h2>
         <div class="card">
-          <p>✉️ Email: <a href="mailto:liangyyo20825@gmail.com" style="color: #0284c7; text-decoration: none; font-weight: 600;">liangyyo20825@gmail.com</a></p>
-          <p>📷 Instagram: <a href="https://instagram.com/l_yuchien" target="_blank" style="color: #0284c7; text-decoration: none; font-weight: 600;">@l_yuchien</a></p>
+          <p>✉️ Email: <a href="mailto:liangyyo20825@gmail.com" style="color: #e11d48; text-decoration: none; font-weight: bold;">liangyyo20825@gmail.com</a></p>
+          <p>📷 Instagram: <a href="https://instagram.com/l_yuchien" target="_blank" style="color: #e11d48; text-decoration: none; font-weight: bold;">@l_yuchien</a></p>
         </div>
       </section>
     </div>
@@ -429,28 +403,18 @@
     © YoYo Liang. All Rights Reserved.
   </footer>
 
-  <!-- 前端分頁與背景動態切換邏輯 -->
+  <!-- 前端分頁邏輯 -->
   <script>
-    function switchTab(tabId, bgImage) {
-      // 1. 切換內容分頁顯示
+    function switchTab(tabId) {
       const contents = document.querySelectorAll('.tab-content');
       contents.forEach(content => content.classList.remove('active'));
       
-      // 2. 切換按鈕的高亮狀態
       const buttons = document.querySelectorAll('.nav-btn');
       buttons.forEach(button => button.classList.remove('active'));
       
-      // 3. 顯示目前點選的分頁
       document.getElementById(tabId).classList.add('active');
       event.currentTarget.classList.add('active');
       
-      // 4. 🔥 重點：根據傳入的圖片名稱，動態更換 body 的背景圖，並保有原本的漸層磨砂效果
-      document.body.style.background = `linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 249, 255, 0.9)), url('${bgImage}')`;
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundPosition = 'center';
-      document.body.style.backgroundAttachment = 'fixed';
-      
-      // 5. 畫面平滑滾動回頂端
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   </script>
