@@ -6,248 +6,505 @@
   <title>YoYo Liang | Personal Website</title>
 
   <style>
-    body {
+    /* 全域設定：科技深藍與運動活力風格 */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: Arial, sans-serif;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
       background: #0f172a;
-      color: white;
+      color: #f1f5f9;
+      line-height: 1.7;
       scroll-behavior: smooth;
     }
 
+    /* 頂端固定式磨砂玻璃導覽列 */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 15px;
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    nav button {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 12px;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+    }
+
+    nav button:hover, nav button.active {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    /* HERO 主視覺區塊 */
     header {
-      height: 100 view hight;
+      height: 55vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradientto bottom, #0f172a, #1e3a8a);
+      background: linear-gradient(to bottom, #0f172a, #1e3a8a);
+      padding: 20px;
+      margin-top: 50px;
     }
 
     h1 {
-      font-size: 50 px;
-      margin: 10 px;
+      font-size: 52px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      background: linear-gradient(to right, #ffffff, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    p {
-      font-size: 18 px;
-      opacity: 0.9;
-    }
-
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100 %;
-      background:rgba (0,0,0,0.5);
-      display: flex;
-      justify-content: center;
-      gap: 20 px;
-      padding: 10 px;
-      backdrop-filter: blur (10 px);
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14 px;
-    }
-
-    section {
-      padding: 80 px 20 px;
-      max-width: 900 px;
-      margin: auto;
-    }
-
-    .card {
-      background: rgba (255,255,255,0.05);
-      padding: 20 px;
-      border-radius: 12 px;
-      margin-top: 20 px;
+    header p {
+      font-size: 18px;
+      color: #cbd5e1;
+      font-weight: 400;
     }
 
     .lang {
-      margin-top: 10 px;
-      font-size: 14 px;
-      opacity: 0.7;
+      margin-top: 10px;
+      font-size: 15px;
+      color: #38bdf8;
+      opacity: 0.9;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    /* 主要內容區與分頁顯示邏輯 */
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #38bdf8;
+      border-left: 5px solid #38bdf8;
+      padding-left: 12px;
+      margin-bottom: 20px;
+      margin-top: 10px;
+    }
+
+    h3 {
+      color: #38bdf8;
+      margin-top: 15px;
+      margin-bottom: 12px;
+      font-size: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 5px;
+    }
+
+    /* 卡片樣式 */
+    .card {
+      background: rgba(30, 41, 59, 0.6);
+      padding: 25px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .card p {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    /* 特殊經歷與勳章列表 */
+    .highlight-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 15px;
+    }
+
+    .highlight-list li {
+      position: relative;
+      padding-left: 25px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: #e2e8f0;
+    }
+
+    .highlight-list li::before {
+      content: "🏅";
+      position: absolute;
+      left: 0;
+    }
+
+    /* 一般專業與經歷條列樣式 */
+    .normal-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .normal-list li {
+      position: relative;
+      padding-left: 22px;
+      margin-bottom: 10px;
+      font-size: 15px;
+    }
+
+    .normal-list li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: #38bdf8;
+    }
+
+    /* 目標倒數器樣式 */
+    .calculator-box {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .calc-input-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    input[type="date"] {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.7);
+      color: white;
+      border-radius: 8px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    button.calc-btn {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button.calc-btn:hover {
+      background: #0ea5e9;
+    }
+
+    .result-text {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #38bdf8;
     }
 
     footer {
       text-align: center;
-      padding: 40 px;
-      opacity: 0.6;
+      padding: 40px;
+      opacity: 0.5;
+      font-size: 14px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#about">About</a>
-  <a href="#education">Education</a>
-  <a href="#expertise">Expertise</a>
-  <a href="#cert">Certifications</a>
-  <a href="#contact">Contact</a>
-</nav>
+  <!-- 頂端導覽分頁按鈕 -->
+  <nav>
+    <button class="nav-btn active" onclick="switchTab('about-tab')">關於我</button>
+    <button class="nav-btn" onclick="switchTab('expertise-tab')">專業與證照</button>
+    <button class="nav-btn" onclick="switchTab('competition-tab')">賽事經歷</button>
+    <button class="nav-btn" onclick="switchTab('research-tab')">學術與其他</button>
+    <button class="nav-btn" onclick="switchTab('countdown-tab')">目標看板</button>
+  </nav>
 
-<!-- HERO -->
-<header>
-  <h1>YoYo Liang</h1>
-  <pEnjoy your life . Love yourself</p>
-  <p class="lang">努力不會白費 時間會證明一切</p>
-</header>
+  <!-- HERO 首頁大圖區 -->
+  <header>
+    <h1>YoYo Liang</h1>
+    <p>Enjoy your life • Love yourself</p>
+    <p class="lang">努力不會白費 時間會證明一切</p>
+  </header>
 
-<!-- ABOUT -->
-<section id="about">
-  <h2>About Me｜個人介紹</h2>
-  <div class="card">
-    <p>
-      I am YoYo Liang, a Master’s graduate in Competitive Sports of Physical Education from National Taiwan University of Sport.
-      I specialize in athletics Hammer throw, Bobsleigh, Sports biomechanics, and strength & Conditioning.
-    </p>
-    <p class="lang">
-      我畢業於國立臺灣體育運動大學 競技運動學系 體育學碩士
-      專長：田徑競技運動訓練、肌力體能訓練、運動科學研究、運動生物力學、幼兒體能教學、水上活動
-    <li>特殊經歷：
-      <li>Chinese Taipei Bobsleigh National Team | 中華台北雪車國家代表隊<li>
-      <li>Chinese Taipei Track and Field National Team|中華台北田徑國家代表隊<li>
-     <li> Member of Taiwan First Women's National Bobsleigh Team ｜ 臺灣歷史第一組女子雪車隊<li>
-      <li>Taiwan U20 Women's Hammer Throw National Record Holder | 臺灣 U20 女子田徑鏈球國家紀錄保持人 <li>
-      <li>Ranked Third All-Time in Taiwan Women's Hammer Throw PB: 60.88 m | 臺灣女子鏈球第三傑 成績60.88公尺<li>
-      <li>Competed 2026 Milan Cortina Winter Olympic Games | 2026年科爾蒂納米蘭冬季奧運會<li>
-      <li>Competed 2025 IBSF World Championships | 2025年IBSF雪車世界錦標賽<li>
-     <li> Competed 2020 Asian U20 Athletics Championships | 2020年亞洲青年田徑錦標賽<li>
-      <li>Competed 2018 Asian Qualifier for the Summer Youth Olympic Games| 2018年亞洲區夏季青年奧運資格賽<li>
+  <!-- 網頁主要內容 -->
+  <main>
+    
+    <!-- 分頁一：關於我 -->
+    <div id="about-tab" class="tab-content active">
+      <section id="about">
+        <h2>About Me｜個人介紹</h2>
+        <div class="card">
+          <p>
+            I am YoYo Liang, a Master’s graduate in Competitive Sports of Physical Education from National Taiwan University of Sport.
+            I specialize in athletics Hammer throw, Bobsleigh, Sports biomechanics, and strength & Conditioning.
+          </p>
+          <p class="lang" style="color: #cbd5e1; font-weight: normal; letter-spacing: 0; margin-bottom: 15px;">
+            我畢業於國立臺灣體育運動大學 競技運動學系 體育學碩士。<br>
+            專長：田徑競技運動訓練、肌力體能訓練、運動科學研究、運動生物力學、幼兒體能教學、水上活動。
+          </p>
+          
+          <h3>🏅 特殊經歷 Highlight</h3>
+          <ul class="highlight-list">
+            <li>Chinese Taipei Bobsleigh National Team | 中華台北雪車國家代表隊</li>
+            <li>Chinese Taipei Track and Field National Team | 中華台北田徑國家代表隊</li>
+            <li>Member of Taiwan First Women's National Bobsleigh Team | 臺灣歷史第一組女子雪車隊</li>
+            <li>Taiwan U20 Women's Hammer Throw National Record Holder | 臺灣 U20 女子田徑鏈球國家紀錄保持人</li>
+            <li>Ranked Third All-Time in Taiwan Women's Hammer Throw PB: 60.88 m | 臺灣女子鏈球第三傑 成績60.88公尺</li>
+            <li>Competed 2026 Milan Cortina Winter Olympic Games | 2026年科爾蒂納米蘭冬季奧運會</li>
+            <li>Competed 2025 IBSF World Championships | 2025年IBSF雪車世界錦標賽</li>
+            <li>Competed 2020 Asian U20 Athletics Championships | 2020年亞洲青年田徑錦標賽</li>
+            <li>Competed 2018 Asian Qualifier for the Summer Youth Olympic Games | 2018年亞洲區夏季青年奧運資格賽</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="education">
+        <h2>Education｜學歷</h2>
+        <div class="card">
+          <p><strong>National Taiwan University of Sport</strong></p>
+          <p>Master Degree Competitive Sports of Physical Education</p>
+          <p class="lang" style="color: #cbd5e1; font-weight: normal; letter-spacing: 0;">國立臺灣體育運動大學 競技運動學系 體育學碩士</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 分頁二：專業與證照 -->
+    <div id="expertise-tab" class="tab-content">
+      <section id="expertise">
+        <h2>Expertise｜專業</h2>
+        <div class="card">
+          <ul class="normal-list">
+            <li>Track and Field Hammer Throw｜田徑鏈球</li>
+            <li>Bobsleigh ｜雪車</li>
+            <li>Sports Biomechanics｜運動生物力學</li>
+            <li>Strength & Conditioning｜肌力體能</li>
+            <li>Physical Education｜幼兒體能</li>
+            <li>Stand Up Paddle｜SUP立槳</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="cert">
+        <h2>Certifications｜專業證照</h2>
+        <div class="card">
+          <ul class="normal-list">
+            <li>Teacher Education Program｜修畢教師職前教育證書</li>
+            <li>Certificate of Full-time School Sports Coach｜教育部學校專任運動教練證</li>
+            <li>CTAA Athletics Judge Certificate｜田徑Ｂ級裁判證</li>
+            <li>PADI Open Water Diver｜PADI初級潛水指導員</li>
+            <li>Stand Up Paddle (SUP) Instructor Certificate｜丙級立式划槳教練證</li>
+            <li>C.T.B.S.A Bobsleigh Coach License｜雪車Ｃ教練證</li>
+            <li>C.T.L.A. Luge Coach License｜雪橇Ｃ級教練證</li>
+            <li>Fitness Trainer License｜體適能健身Ｃ級教練</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- 分頁三：賽事經歷 -->
+    <div id="competition-tab" class="tab-content">
+      <section id="competition">
+        <h2>Competition｜比賽經歷</h2>
+        <div class="card">
+          <h3>Track & Field｜田徑項目</h3>
+          <ul class="normal-list" style="margin-bottom: 25px;">
+            <li>Hammer Throw Athlete｜鏈球選手</li>
+            <li>臺灣 U20 女子田徑鏈球國家紀錄保持人</li>
+            <li>入選2020年第19屆亞洲青年田徑錦標賽</li>
+            <li>入選2018年第3屆青年奧運亞洲區資格賽 第四名</li>
+            <li><strong>全國運動會</strong>
+              <br>• 112年全國運動會-公開女子鏈球-銅牌
+              <br>• 110年全國運動會-公開女子鏈球-鏈球銀牌
+            </li>
+            <li><strong>全國田徑錦標賽</strong>
+              <br>• 113年全國田徑錦標賽-女子鏈球-銅牌
+              <br>• 111年全國田徑錦標賽-女子鏈球-銅牌
+              <br>• 109年全國田徑錦標賽-女子鏈球-金牌
+            </li>
+            <li><strong>全國大專校院運動會</strong>
+              <br>• 114年全國大專校院運動會-銅牌
+              <br>• 113年全國大專校院運動會-銀牌
+              <br>• 112年全國大專校院運動會-銅牌
+              <br>• 111年全國大專校院運動會-銀牌
+              <br>• 110年全國大專校院運動會-銅牌（破Ｕ20紀錄）
+              <br>• 109年全國大專校院運動會-銀牌
+            </li>
+            <li><strong>全國中等學校運動會</strong>
+              <br>• 108年全國中等學校運動會-高中女子鏈球-金牌（破大會紀錄）
+              <br>• 107年全國中等學校運動會-高中女子鏈球-銅牌
+              <br>• 106年全國中等學校運動會-高中女子鏈球-銀牌
+              <br>• 105年全國中等學校運動會-國中女子鏈球-銀牌（破大會紀錄）
+            </li>
+          </ul>
+
+          <h3>❄️ Winter Sports｜冬季項目</h3>
+          <ul class="normal-list">
+            <li>Bobsleigh Athlete｜女子雪車選手</li>
+            <li>入選2026年科爾蒂納米蘭冬季奧運會</li>
+            <li>入選2025年IBSF雪車世界錦標賽</li>
+            <li><strong>IBSF World Championships | 世界錦標賽</strong>
+              <br>• IBSF 世錦賽-女子雙人車-第18席次
+            </li>
+            <li><strong>North American Cup | 北美盃</strong>
+              <br>• 2025/2026 NAC 雙人女雪車-第五名
+              <br>• 2025/2026 NAC 雙人女雪車-第八名
+              <br>• 2024/2025 NAC 雙人女雪車-第四名
+              <br>• 2024/2025 NAC 雙人女雪車-第六名
+              <br>• 2024/2025 NAC 雙人女雪車-第七名
+            </li>
+            <li><strong>Europe Cup | 歐洲盃</strong>
+              <br>• 2024/2025 EC 雙人女雪車-第八名
+            </li>
+            <li>Luge Training Program｜雪橇訓練計畫</li>
+            <li>National Winter Sports Athlete｜國家冬季運動培訓選手</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- 分頁四：學術與其他經歷 -->
+    <div id="research-tab" class="tab-content">
+      <section id="research">
+        <h2>Research Presentations｜學術論文發表</h2>
+        <div class="card">
+          <ul class="normal-list">
+            <li>臺灣女子鏈球選手投擲動作之運動學分析 / 學術論文</li>
+            <li>2025臺灣運動生物力學學會夏季研討會 / 優秀海報論文獎</li>
+            <li>女子鏈球運動員鏈球速度與支撐時間之關聯性 / 2025臺灣運動生物力學夏季研討會 / 2025.06.21發表</li>
+            <li>我國女子鏈球運動員之運動學分析 / 2025身體活動健康永續國際研討會 / 2025.05.04</li>
+            <li>世界級女子鏈球選手投擲之運動學與表現關係 / 2022臺灣運動生物力學年會暨智慧運動科學研討會 / 2022.12.17</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="other">
+        <h2>Other Experience｜其他經歷</h2>
+        <div class="card">
+          <ul class="normal-list">
+            <li>臺灣美津濃Ｍizuno贊助選手</li>
+            <li>臺灣體育運動大學113-108學年菁英選手</li>
+            <li>臺灣體育運動大學女生宿舍自治委員會幹部</li>
+            <li>ISATC國際體育事務人才培訓營-培訓學員</li>
+            <li>111-114年體育署運動科學支援競技運動計畫</li>
+            <li>111年青年職涯品牌行銷營-培訓學員</li>
+            <li>110年大專女學生領導力培訓營-培訓學員</li>
+            <li>108級臺灣體育運動大學競技運動學系系學會幹部</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact｜聯絡我</h2>
+        <div class="card">
+          <p>✉️ Email: <a href="mailto:liangyyo20825@gmail.com" style="color: #38bdf8; text-decoration: none;">liangyyo20825@gmail.com</a></p>
+          <p>📷 Instagram: <a href="https://instagram.com/l_yuchien" target="_blank" style="color: #38bdf8; text-decoration: none;">@l_yuchien</a></p>
+        </div>
+      </section>
+    </div>
+
+    <!-- 分頁五：目標看板（按鈕倒數計算功能） -->
+    <div id="countdown-tab" class="tab-content">
+      <section id="countdown">
+        <h2>Goal Board｜目標看板</h2>
+        <div class="card calculator-box">
+          <h3>⏳ 關鍵挑戰倒數器</h3>
+          <p>「努力不會白費，時間會證明一切。」鎖定妳的下一個重要賽事、教練認證或重要挑戰日期，保持紀律，全力衝刺！</p>
+          
+          <div class="calc-input-group">
+            <input type="date" id="targetDate">
+            <button class="calc-btn" onclick="calculateDays()">開始計算</button>
+          </div>
+          
+          <div class="result-text" id="calcResult"></div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer>
+    © YoYo Liang. All Rights Reserved.
+  </footer>
+
+  <!-- 前端分頁與計算邏輯 -->
+  <script>
+    function switchTab(tabId) {
+      const contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
       
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(button => button.classList.remove('active'));
       
-    </p>
-  </div>
-</section>
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-<!-- EDUCATION -->
-<section id="education">
-  <h2>Education｜學歷</h2>
-  <div class="card">
-    <p>National Taiwan University of Sport</p>
-    <p>Master Degree Competitive Sports of Physical Education</p>
-    <p class="lang">國立臺灣體育運動大學 競技運動學系 體育學碩士</p>
-  </div>
-</section>
+    function calculateDays() {
+      const dateInput = document.getElementById('targetDate').value;
+      const resultDiv = document.getElementById('calcResult');
+      
+      if (!dateInput) {
+        resultDiv.innerText = "請先選擇一個日期喔！";
+        return;
+      }
 
-<!-- EXPERTISE -->
-<section id="expertise">
-  <h2>Expertise｜專業</h2>
-  <div class="card">
-    <ul>
-      <li>Track and Field Hammer Throw｜田徑鏈球/li>
-      <li>Bobsleigh ｜雪車</li>
-      <li>Sports Biomechanics｜運動生物力學</li>
-      <li>Strength & Conditioning｜肌力體能</li>
-      <li>Physical Education｜幼兒體能</li>
-      <li>Stand Up Paddlle｜SUP立槳</li>
-    </ul>
-  </div>
-</section>
-
-
-<section id="competition">
-  <h2>Competition｜比賽經歷</h2>
-
-  <div class="card">
-
-    <h3>Track & Field｜田徑項目</h3>
-    <ul>
-      <li>Hammer Throw Athlete｜鏈球選手</li>
-<li>臺灣 U20 女子田徑鏈球國家紀錄保持人</li>
-<li>入選2020年第19屆亞洲青年田徑錦標賽</li>
-<li>入選2018年青年奧運會亞洲區資格賽2018第3屆青年奧運亞洲區資格賽 第四名</li>
- <li>全國運動會</li>
-  <li>112年全國運動會-公開女子鏈球-銅牌</li>
-  <li>110年全國運動會-公開女子鏈球-鏈球銀牌</li>
-<li>全國田徑錦標賽</li>
-  <li>113年全國田徑錦標賽-女子鏈球-銅牌</li>
-  <li>111年全國田徑錦標賽-女子鏈球-銅牌</li>
-  <li>109年全國田徑錦標賽-女子鏈球-金牌</li>
-<li>全國大專校院運動會</li>
-   <li>114年全國大專校院運動會-銅牌</li>
-   <li>113年全國大專校院運動會-銀牌</li>
-   <li>112年全國大專校院運動會-銅牌</li>
-   <li>111年全國大專校院運動會-銀牌</li>
-   <li>110年全國大專校院運動會-銅牌（破Ｕ20紀錄）</li>
-   <li>109年全國大專校院運動會-銀牌</li>
-<li>全國中等學校運動會</li>
-  <li>108年全國中等學校運動會-高中女子鏈球-金牌（破大會紀錄）</li>
-  <li>107年全國中等學校運動會-高中女子鏈球-銅牌</li>
-  <li>106年全國中等學學校運動會-高中女子鏈球-銀牌</li>
-  <li>105年全國中等學校運動會-國中女子鏈球-銀牌（破大會紀錄）</li>
-    </ul>
-    <br>
-    <h3>Winter Sports｜冬季項目<</h3>
-     <ul>
-    <li>Bobsleigh Athlete｜女子雪車選手</li>
-    <li>入選2026年科爾蒂納米蘭冬季奧運會</li>
-    <li>入選2025年IBSF雪車世界錦標賽</li>
-  <li>IBSF World Championships | 世界錦標賽 <br>
-<li>IBSF 世錦賽-女子雙人車-第18席次 </li>
-<li>North American Cup北美盃</li>
-<li>2025/2026 NAC 雙人女雪車-第五名</li>
-<li>2025/2026 NAC 雙人女雪車- 第八名</li>
-<li>2024/2025 NAC 雙人女雪車- 第四名</li>
-<li>2024/2025 NAC 雙人女雪車- 第六名</li>
-<li>2024/2025 NAC 雙人女雪車- 第七名</li>
-</li>Europe Cup歐洲盃</li>
-<li>2024/2025 EC 雙人女雪車- 第八名</li>
-    </ul>
-  </div>
-</section>
-<!-- CERTIFICATIONS -->
-<section id="cert">
-  <h2>Certifications｜專業證照</h2>
-  <div class="card">
-    <ul>
-      <li>Teacher Education Program｜修畢教師職前教育證書</li>
-      <li>Certificate of Full-time School Sports Coach)｜教育部學校專任運動教練證</li>
-      <li>CTAA Athletics Judge Certificate｜田徑Ｂ級裁判證</li>
-      <li>PADI Open Water Diver｜PADI初級潛水指導員</li>
-      <li>Stand Up Paddle (SUP) Instructor Certificate｜丙級立式划槳教練證</li>
-       <li> C.T.B.S.A Bobsleigh Coach Licens｜雪車Ｃ教練證</li>
-       <li>C.T.L.A. Luge Coach License｜雪橇Ｃ級教練證</li>
-      <li>Fitness Trainer License｜體適能健身Ｃ級教練</li>
-    </ul>
-  </div>
-   <h2>Research Presentations｜學術論文發表</h2>
-  <div class="card">
-    <ul>
-  <li>臺灣女子鏈球選手投擲動作之運動學分析/學術論文</li>
-<li>2025臺灣運動生物力學學會夏季研討會/優秀海報論文獎</li>
-<li>女子鏈球運動員鏈球速度與支撐時間之關聯性/2025臺灣運動生物力學夏季研討會/2025.06.21表</li>
-<li>我國女子鏈球運動員之運動學分析/2025身體活動健康永續國際研討會/2025.05.04</li>
-  <li>世界級女子鏈球選手投擲之運動學與表現關係/ 2022臺灣運動生物力學年會暨智慧運動科學研討會/2022.12.17</li>
- </ul>
-  </div>
-       <h2>Other Experience｜其他經歷</h2>
-  <div class="card">
-    <ul>
-      <li>臺灣美津濃Ｍizuno贊助選手</li>
-      <li>臺灣體育運動大學113-108學年菁英選手</li>
-      <li>臺灣體育運動大學女生宿舍自治委員會幹部</li>
-      <li>ISATC國際體育事務人才培訓營-培訓學員</li>
-      <li>111-114年體育署運動科學支援競技運動計畫</li>
-      <li>111年青年職涯品牌行銷營-培訓學員</li>
-      <li>110年大專女學生領導力培訓營-培訓學員</li>
-      <li>108級臺灣體育運動大學競技運動學系系學會幹部</li>
-</section>
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact｜聯絡我</h2>
-  <div class="card">
-    <p>Email: liangyyo20825@gmail.com</p>
-    <p>Instagram: @l_yuchien</p>
-  </div>
-
-<footer>
-  © YoYo Liang
-</footer>
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      
+      const target = new Date(dateInput);
+      target.setHours(0,0,0,0);
+      
+      const timeDiff = target.getTime() - today.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff > 0) {
+        resultDiv.innerHTML = `🔥 距離目標日期，還剩下 <strong>${daysDiff}</strong> 天！全力衝刺！`;
+        resultDiv.style.color = "#38bdf8";
+      } else if (daysDiff === 0) {
+        resultDiv.innerHTML = "🎉 就是今天！展現強大實力的時刻到了！";
+        resultDiv.style.color = "#4ade80";
+      } else {
+        resultDiv.innerHTML = `📅 這個重要日子已經過去了 <strong>${Math.abs(daysDiff)}</strong> 天，也是前進的下一枚勳章！`;
+        resultDiv.style.color = "#94a3b8";
+      }
+    }
+  </script>
 
 </body>
 </html>
